@@ -4,13 +4,13 @@ import { getUsers } from "../api/userService"
 
 const useUsers = () => {
   const [users, setUsers] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        setIsLoading(true)
+        setLoading(true)
         const fetchedUsers = await getUsers()
 
         const mappedUsers = fetchedUsers?.data.map((user) => {
@@ -29,12 +29,12 @@ const useUsers = () => {
         setError(err)
         console.log(err)
       } finally {
-        setIsLoading(false)
+        setLoading(false)
       }
     }
     fetchUsers()
   }, [])
-  return { users, isLoading, error }
+  return { users, loading, error }
 }
 
 export default useUsers

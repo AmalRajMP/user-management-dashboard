@@ -2,6 +2,8 @@ import Header from "../components/Header"
 import SearchBar from "../components/SearchBar"
 import UserTable from "../components/UserTable"
 import Pagination from "../components/Pagination"
+import Loader from "../components/Loader"
+import ErrorState from "../components/ErrorState"
 
 import useUsers from "../hooks/useUsers"
 
@@ -10,7 +12,7 @@ import { FiFilter } from "react-icons/fi"
 import "../styles/Dashboard.css"
 
 const Dashboard = () => {
-  const { users, isLoading, error } = useUsers()
+  const { users, loading, error } = useUsers()
 
   return (
     <main className="dashboard">
@@ -37,9 +39,17 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <UserTable users={users} />
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <ErrorState />
+      ) : (
+        <>
+          <UserTable users={users} />
 
-      <Pagination />
+          <Pagination />
+        </>
+      )}
     </main>
   )
 }
