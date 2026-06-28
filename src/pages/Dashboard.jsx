@@ -1,3 +1,5 @@
+import { useMemo, useState } from "react"
+
 import Header from "../components/Header"
 import SearchBar from "../components/SearchBar"
 import UserTable from "../components/UserTable"
@@ -13,13 +15,25 @@ import "../styles/Dashboard.css"
 
 const Dashboard = () => {
   const { users, loading, error } = useUsers()
+  const [searchTerm, setSearchTerm] = useState("")
+
+  const filteredUsers = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase()
+
+    return users.filter(
+      (user) =>
+        user.firstName.toLowerCase().includes(query) ||
+        user.lastName.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query),
+    )
+  }, [users, searchTerm])
 
   return (
     <main className="dashboard">
       <Header />
 
       <section className="dashboard-toolbar">
-        <SearchBar />
+        <SearchBar value={searchTerm} onSearch={setSearchTerm} />
 
         <div className="toolbar-actions">
           <button type="button" className="filter-btn">
@@ -45,7 +59,7 @@ const Dashboard = () => {
         <ErrorState />
       ) : (
         <>
-          <UserTable users={users} />
+          <UserTable users={filteredUsers} />
 
           <Pagination />
         </>
