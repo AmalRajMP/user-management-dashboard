@@ -1,9 +1,7 @@
-function App() {
-  return (
-    <div>
-      <h1>User Management Dashboard</h1>
-    </div>
-  )
+import Dashboard from "./pages/Dashboard"
+
+const App = () => {
+  return <Dashboard />
 }
 
 export default App
