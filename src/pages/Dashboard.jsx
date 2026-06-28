@@ -13,9 +13,16 @@ import { FiFilter } from "react-icons/fi"
 
 import "../styles/Dashboard.css"
 
+const fieldMap = {
+  name: "firstName",
+  email: "email",
+  department: "department",
+}
+
 const Dashboard = () => {
   const { users, loading, error } = useUsers()
   const [searchTerm, setSearchTerm] = useState("")
+  const [sortBy, setSortBy] = useState("")
 
   const filteredUsers = useMemo(() => {
     const query = searchTerm.trim().toLowerCase()
@@ -27,6 +34,27 @@ const Dashboard = () => {
         user.email.toLowerCase().includes(query),
     )
   }, [users, searchTerm])
+
+  const sortedUsers = useMemo(() => {
+    if (!sortBy) return [...filteredUsers]
+
+    const [field, direction] = sortBy.split("-")
+
+    const sortField = fieldMap[field]
+
+    const sorted = [...filteredUsers]
+
+    sorted.sort((a, b) => {
+      const valueA = a[sortField].toLowerCase()
+      const valueB = b[sortField].toLowerCase()
+
+      return direction === "asc"
+        ? valueA.localeCompare(valueB)
+        : valueB.localeCompare(valueA)
+    })
+
+    return sorted
+  }, [filteredUsers, sortBy])
 
   return (
     <main className="dashboard">
@@ -41,7 +69,11 @@ const Dashboard = () => {
             <span>Filter</span>
           </button>
 
-          <select className="sort-select">
+          <select
+            className="sort-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
             <option value="">Sort By</option>
             <option value="name-asc">Name (A-Z)</option>
             <option value="name-desc">Name (Z-A)</option>
@@ -59,7 +91,7 @@ const Dashboard = () => {
         <ErrorState />
       ) : (
         <>
-          <UserTable users={filteredUsers} />
+          <UserTable users={sortedUsers} />
 
           <Pagination />
         </>
