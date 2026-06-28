@@ -3,11 +3,15 @@ import SearchBar from "../components/SearchBar"
 import UserTable from "../components/UserTable"
 import Pagination from "../components/Pagination"
 
+import useUsers from "../hooks/useUsers"
+
 import { FiFilter } from "react-icons/fi"
 
 import "../styles/Dashboard.css"
 
 const Dashboard = () => {
+  const { users, isLoading, error } = useUsers()
+
   return (
     <main className="dashboard">
       <Header />
@@ -33,7 +37,7 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <UserTable />
+      <UserTable users={users} />
 
       <Pagination />
     </main>
