@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 import Header from "../components/Header"
 import SearchBar from "../components/SearchBar"
@@ -23,6 +23,12 @@ const Dashboard = () => {
   const { users, loading, error } = useUsers()
   const [searchTerm, setSearchTerm] = useState("")
   const [sortBy, setSortBy] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchTerm])
 
   const filteredUsers = useMemo(() => {
     const query = searchTerm.trim().toLowerCase()
@@ -55,6 +61,20 @@ const Dashboard = () => {
 
     return sorted
   }, [filteredUsers, sortBy])
+
+  const paginatedUsers = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize
+    const endIndex = startIndex + pageSize
+
+    return sortedUsers.slice(startIndex, endIndex)
+  }, [sortedUsers, currentPage, pageSize])
+
+  const totalPages = Math.ceil(sortedUsers.length / pageSize)
+  const totalUsers = sortedUsers.length
+
+  const startUser = totalUsers === 0 ? 0 : (currentPage - 1) * pageSize + 1
+
+  const endUser = Math.min(currentPage * pageSize, totalUsers)
 
   return (
     <main className="dashboard">
@@ -91,9 +111,18 @@ const Dashboard = () => {
         <ErrorState />
       ) : (
         <>
-          <UserTable users={sortedUsers} />
+          <UserTable users={paginatedUsers} />
 
-          <Pagination />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            totalUsers={totalUsers}
+            startUser={startUser}
+            endUser={endUser}
+            onPageChange={setCurrentPage}
+            onPageSizeChange={setPageSize}
+          />
         </>
       )}
     </main>
