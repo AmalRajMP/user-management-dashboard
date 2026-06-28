@@ -1,3 +1,5 @@
+import { FiPlus } from "react-icons/fi"
+
 import "../styles/Header.css"
 
 const Header = () => {
@@ -13,7 +15,8 @@ const Header = () => {
       </div>
 
       <button type="button" className="add-user-btn">
-        Add User
+        <FiPlus className="btn-icon" />
+        <span>Add User</span>
       </button>
     </header>
   )
