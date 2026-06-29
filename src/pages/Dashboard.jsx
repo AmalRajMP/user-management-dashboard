@@ -6,6 +6,7 @@ import UserTable from "../components/UserTable"
 import Pagination from "../components/Pagination"
 import Loader from "../components/Loader"
 import ErrorState from "../components/ErrorState"
+import FilterPopup from "../components/FilterPopup"
 
 import useUsers from "../hooks/useUsers"
 
@@ -25,6 +26,14 @@ const Dashboard = () => {
   const [sortBy, setSortBy] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
+
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [filters, setFilters] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    department: "",
+  })
 
   useEffect(() => {
     setCurrentPage(1)
@@ -84,7 +93,11 @@ const Dashboard = () => {
         <SearchBar value={searchTerm} onSearch={setSearchTerm} />
 
         <div className="toolbar-actions">
-          <button type="button" className="filter-btn">
+          <button
+            type="button"
+            className="filter-btn"
+            onClick={() => setIsFilterOpen(true)}
+          >
             <FiFilter className="filter-icon" />
             <span>Filter</span>
           </button>
@@ -125,6 +138,7 @@ const Dashboard = () => {
           />
         </>
       )}
+      {isFilterOpen && <FilterPopup onClose={() => setIsFilterOpen(false)} />}
     </main>
   )
 }
