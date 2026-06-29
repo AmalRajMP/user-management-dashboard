@@ -103,6 +103,12 @@ const Dashboard = () => {
 
   const endUser = Math.min(currentPage * pageSize, totalUsers)
 
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(Math.max(totalPages, 1))
+    }
+  }, [currentPage, totalPages])
+
   return (
     <main className="dashboard">
       <Header
