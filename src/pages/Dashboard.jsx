@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination"
 import Loader from "../components/Loader"
 import ErrorState from "../components/ErrorState"
 import FilterPopup from "../components/FilterPopup"
+import UserForm from "../components/UserForm"
 
 import useUsers from "../hooks/useUsers"
 
@@ -21,7 +22,8 @@ const fieldMap = {
 }
 
 const Dashboard = () => {
-  const { users, loading, error } = useUsers()
+  const { users, setUsers, loading, error } = useUsers()
+
   const [searchTerm, setSearchTerm] = useState("")
   const [sortBy, setSortBy] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
@@ -34,6 +36,9 @@ const Dashboard = () => {
     email: "",
     department: "",
   })
+
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [selectedUser, setSelectedUser] = useState(null)
 
   useEffect(() => {
     setCurrentPage(1)
@@ -97,7 +102,12 @@ const Dashboard = () => {
 
   return (
     <main className="dashboard">
-      <Header />
+      <Header
+        onAddUser={() => {
+          setSelectedUser(null)
+          setIsFormOpen(true)
+        }}
+      />
 
       <section className="dashboard-toolbar">
         <SearchBar value={searchTerm} onSearch={setSearchTerm} />
@@ -134,7 +144,11 @@ const Dashboard = () => {
         <ErrorState />
       ) : (
         <>
-          <UserTable users={paginatedUsers} />
+          <UserTable
+            users={paginatedUsers}
+            setSelectedUser={setSelectedUser}
+            setIsFormOpen={setIsFormOpen}
+          />
 
           <Pagination
             currentPage={currentPage}
@@ -153,6 +167,15 @@ const Dashboard = () => {
           filters={filters}
           setFilters={setFilters}
           onClose={() => setIsFilterOpen(false)}
+        />
+      )}
+
+      {isFormOpen && (
+        <UserForm
+          users={users}
+          setUsers={setUsers}
+          selectedUser={selectedUser}
+          onClose={() => setIsFormOpen(false)}
         />
       )}
     </main>

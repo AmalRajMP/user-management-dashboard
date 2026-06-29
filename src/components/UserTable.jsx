@@ -2,7 +2,7 @@ import UserRow from "./UserRow"
 
 import "../styles/UserTable.css"
 
-const UserTable = ({ users }) => {
+const UserTable = ({ users, setSelectedUser, setIsFormOpen }) => {
   return (
     <div className="user-table-container">
       <table className="user-table">
@@ -19,7 +19,12 @@ const UserTable = ({ users }) => {
 
         <tbody>
           {users.map((user) => (
-            <UserRow key={user.id} user={user} />
+            <UserRow
+              key={user.id}
+              user={user}
+              setSelectedUser={setSelectedUser}
+              setIsFormOpen={setIsFormOpen}
+            />
           ))}
         </tbody>
       </table>
