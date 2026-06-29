@@ -40,15 +40,25 @@ const Dashboard = () => {
   }, [searchTerm])
 
   const filteredUsers = useMemo(() => {
-    const query = searchTerm.trim().toLowerCase()
+    return users.filter((user) => {
+      const searchValue = searchTerm.toLowerCase()
 
-    return users.filter(
-      (user) =>
-        user.firstName.toLowerCase().includes(query) ||
-        user.lastName.toLowerCase().includes(query) ||
-        user.email.toLowerCase().includes(query),
-    )
-  }, [users, searchTerm])
+      const matchesSearch =
+        user.firstName.toLowerCase().includes(searchValue) ||
+        user.lastName.toLowerCase().includes(searchValue) ||
+        user.email.toLowerCase().includes(searchValue)
+
+      const matchesFilters =
+        user.firstName
+          .toLowerCase()
+          .includes(filters.firstName.toLowerCase()) &&
+        user.lastName.toLowerCase().includes(filters.lastName.toLowerCase()) &&
+        user.email.toLowerCase().includes(filters.email.toLowerCase()) &&
+        user.department.toLowerCase().includes(filters.department.toLowerCase())
+
+      return matchesSearch && matchesFilters
+    })
+  }, [users, searchTerm, filters])
 
   const sortedUsers = useMemo(() => {
     if (!sortBy) return [...filteredUsers]
@@ -138,7 +148,13 @@ const Dashboard = () => {
           />
         </>
       )}
-      {isFilterOpen && <FilterPopup onClose={() => setIsFilterOpen(false)} />}
+      {isFilterOpen && (
+        <FilterPopup
+          filters={filters}
+          setFilters={setFilters}
+          onClose={() => setIsFilterOpen(false)}
+        />
+      )}
     </main>
   )
 }
