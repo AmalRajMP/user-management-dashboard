@@ -38,7 +38,9 @@ const UserForm = ({ users, selectedUser, setUsers, onClose }) => {
 
     try {
       if (isEditMode) {
-        await updateUser(selectedUser.id, formData)
+        if (selectedUser.id <= 10) {
+          await updateUser(selectedUser.id, formData)
+        }
 
         setUsers((prevUsers) =>
           prevUsers.map((user) =>

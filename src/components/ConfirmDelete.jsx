@@ -5,7 +5,9 @@ import "../styles/ConfirmDelete.css"
 const ConfirmDelete = ({ selectedUser, setUsers, onClose }) => {
   const onDeleteUser = async () => {
     try {
-      await deleteUser(selectedUser.id)
+      if (selectedUser.id <= 10) {
+        await deleteUser(selectedUser.id)
+      }
 
       setUsers((prevUsers) =>
         prevUsers.filter((user) => user.id !== selectedUser.id),
