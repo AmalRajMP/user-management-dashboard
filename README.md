@@ -1,16 +1,104 @@
-# React + Vite
+# User Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive user management dashboard built with React and Vite. The application supports CRUD operations along with search, filtering, sorting, and pagination to provide a clean and intuitive user management experience.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🔗 https://user-management-dashboard-gilt-theta.vercel.app/
 
-## React Compiler
+## GitHub Repository
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+🔗 https://github.com/AmalRajMP/user-management-dashboard
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Fetch user data from the JSONPlaceholder API
+- Add new users
+- Edit existing users
+- Delete users with a confirmation dialog
+- Search users by first name, last name, and email
+- Filter users by first name, last name, email, and department
+- Sort users by name, email, and department
+- Client-side pagination with configurable page size
+- Responsive layout for desktop and mobile
+- Loading and error state handling
+
+## Tech Stack
+
+- React
+- Vite
+- JavaScript (ES6+)
+- Axios
+- React Icons
+- CSS
+
+## Project Structure
+
+```
+src
+├── api
+│   └── userService.js
+├── components
+├── hooks
+│   └── useUsers.js
+├── pages
+│   └── Dashboard.jsx
+├── styles
+├── App.jsx
+└── main.jsx
+```
+
+## Getting Started
+
+### Clone the repository
+
+```bash
+git clone https://github.com/AmalRajMP/user-management-dashboard.git
+```
+
+### Navigate to the project
+
+```bash
+cd user-management-dashboard
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+### Build for production
+
+```bash
+npm run build
+```
+
+## API
+
+The project uses the **JSONPlaceholder** API for user data.
+
+```
+https://jsonplaceholder.typicode.com/users
+```
+
+> **Note:** JSONPlaceholder is a mock API. Newly added users are maintained in the application's local state after a successful API request and are not permanently stored on the server.
+
+## Future Improvements
+
+- Custom form validation messages
+- Toast notifications for CRUD operations
+- Backend integration with persistent storage
+- Additional filter options
+
+## Author
+
+**Amal Raj**
+
+GitHub: https://github.com/AmalRajMP
