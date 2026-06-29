@@ -2,7 +2,12 @@ import UserRow from "./UserRow"
 
 import "../styles/UserTable.css"
 
-const UserTable = ({ users, setSelectedUser, setIsFormOpen }) => {
+const UserTable = ({
+  users,
+  setSelectedUser,
+  setIsFormOpen,
+  setIsDeleteOpen = { setIsDeleteOpen },
+}) => {
   return (
     <div className="user-table-container">
       <table className="user-table">
@@ -24,6 +29,7 @@ const UserTable = ({ users, setSelectedUser, setIsFormOpen }) => {
               user={user}
               setSelectedUser={setSelectedUser}
               setIsFormOpen={setIsFormOpen}
+              setIsDeleteOpen={setIsDeleteOpen}
             />
           ))}
         </tbody>

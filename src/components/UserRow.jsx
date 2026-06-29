@@ -1,8 +1,8 @@
-import { FiEdit2 } from "react-icons/fi"
+import { FiEdit2, FiTrash2 } from "react-icons/fi"
 
 import "../styles/UserRow.css"
 
-const UserRow = ({ user, setSelectedUser, setIsFormOpen }) => {
+const UserRow = ({ user, setSelectedUser, setIsFormOpen, setIsDeleteOpen }) => {
   return (
     <tr>
       <td>{user.id}</td>
@@ -19,6 +19,15 @@ const UserRow = ({ user, setSelectedUser, setIsFormOpen }) => {
           }}
         >
           <FiEdit2 />
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setSelectedUser(user)
+            setIsDeleteOpen(true)
+          }}
+        >
+          <FiTrash2 />
         </button>
       </td>
     </tr>

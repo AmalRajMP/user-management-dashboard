@@ -8,6 +8,7 @@ import Loader from "../components/Loader"
 import ErrorState from "../components/ErrorState"
 import FilterPopup from "../components/FilterPopup"
 import UserForm from "../components/UserForm"
+import ConfirmDelete from "../components/ConfirmDelete"
 
 import useUsers from "../hooks/useUsers"
 
@@ -39,6 +40,8 @@ const Dashboard = () => {
 
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState(null)
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
 
   useEffect(() => {
     setCurrentPage(1)
@@ -148,6 +151,7 @@ const Dashboard = () => {
             users={paginatedUsers}
             setSelectedUser={setSelectedUser}
             setIsFormOpen={setIsFormOpen}
+            setIsDeleteOpen={setIsDeleteOpen}
           />
 
           <Pagination
@@ -176,6 +180,14 @@ const Dashboard = () => {
           setUsers={setUsers}
           selectedUser={selectedUser}
           onClose={() => setIsFormOpen(false)}
+        />
+      )}
+
+      {isDeleteOpen && (
+        <ConfirmDelete
+          selectedUser={selectedUser}
+          setUsers={setUsers}
+          onClose={() => setIsDeleteOpen(false)}
         />
       )}
     </main>
